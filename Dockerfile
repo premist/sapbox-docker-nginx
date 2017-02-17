@@ -6,8 +6,6 @@ ENV NGINX_VERSION 1.11.10
 ENV PAGESPEED_VERSION 1.11.33.4
 
 RUN CONFIG="\
-    --error-log-path=/var/log/nginx/error.log \
-    --http-log-path=/var/log/nginx/access.log \
     --with-http_ssl_module \
     --with-http_v2_module \
     --with-http_gunzip_module \
@@ -26,8 +24,8 @@ RUN CONFIG="\
   && git checkout -b bfd2885 \
   && ( curl -f -L -sS https://ngxpagespeed.com/install | bash -s -- -v $PAGESPEED_VERSION -n $NGINX_VERSION -y -a '$CONFIG' ) \
   && rm -rf /opt/ngx_brotli \
-  && ln -sf /dev/stdout /var/log/nginx/access.log \
-  && ln -sf /dev/stderr /var/log/nginx/error.log
+  && ln -sf /dev/stdout /usr/local/nginx/logs/access.log \
+  && ln -sf /dev/stderr /usr/local/nginx/logs/error.log
 
 EXPOSE 80 443
 CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
