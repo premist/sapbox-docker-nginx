@@ -7,6 +7,7 @@ ENV PAGESPEED_VERSION 1.11.33.4
 ENV NGX_BROTLI_COMMIT_HASH bfd2885
 
 RUN CONFIG="\
+    --with-openssl=/usr/lib/x86_64-linux-gnu \
     --with-http_ssl_module \
     --with-http_v2_module \
     --with-http_gunzip_module \
