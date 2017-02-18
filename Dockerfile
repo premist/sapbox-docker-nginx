@@ -6,18 +6,7 @@ ENV NGINX_VERSION 1.11.10
 ENV PAGESPEED_VERSION 1.11.33.4
 ENV NGX_BROTLI_COMMIT_HASH bfd2885
 
-RUN CONFIG="\
-    --with-openssl=/usr/lib/x86_64-linux-gnu \
-    --with-http_ssl_module \
-    --with-http_v2_module \
-    --with-http_gunzip_module \
-    --with-gzip_static_module \
-    --with-http_mp4_module \
-    --with-ipv6 \
-    --with-threads \
-    --add-module=/opt/ngx_brotli \
-  " \
-  && addgroup --system nginx \
+RUN addgroup --system nginx \
   && adduser --system --no-create-home --disabled-login --disabled-password --ingroup nginx nginx \
   && apt-get update \
   && apt-get install -y --no-install-recommends --no-install-suggests \
@@ -26,7 +15,9 @@ RUN CONFIG="\
   && git clone --recursive https://github.com/google/ngx_brotli.git \
   && cd ngx_brotli \
   && git checkout -b $NGX_BROTLI_COMMIT_HASH \
-  && ( curl -f -L -sS https://ngxpagespeed.com/install | bash -s -- -v $PAGESPEED_VERSION -n $NGINX_VERSION -y -a '$CONFIG' ) \
+  && ( \
+    curl -f -L -sS https://ngxpagespeed.com/install | bash -s -- -v $PAGESPEED_VERSION -n $NGINX_VERSION -y -a '--with-http_ssl_module --with-http_v2_module --with-http_gunzip_module --with-gzip_static_module --with-http_mp4_module --with-ipv6 --with-threads --add-module=/opt/ngx_brotli' \
+  ) \
   && rm -rf /opt/ngx_brotli \
   && apt-get remove -y build-essential git curl wget unzip \
   && apt-get autoremove -y \
