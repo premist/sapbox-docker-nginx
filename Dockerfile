@@ -16,6 +16,8 @@ RUN CONFIG="\
     --with-threads \
     --add-module=/opt/ngx_brotli \
   " \
+  && addgroup --system nginx \
+  && adduser --system --no-create-home --disabled-login --disabled-password --ingroup nginx nginx \
   && apt-get update \
   && apt-get install -y --no-install-recommends --no-install-suggests \
     sudo wget git curl build-essential zlib1g-dev libpcre3 libpcre3-dev libssl-dev unzip ca-certificates \
