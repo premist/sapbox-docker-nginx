@@ -30,5 +30,8 @@ RUN CONFIG="\
   && ln -sf /dev/stdout /usr/local/nginx/logs/access.log \
   && ln -sf /dev/stderr /usr/local/nginx/logs/error.log
 
+ADD nginx.conf /usr/local/nginx/conf/nginx.conf
+ADD nginx.vh.default.conf /usr/local/nginx/conf/conf.d/default.conf
+
 EXPOSE 80 443
 CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
