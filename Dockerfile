@@ -4,6 +4,7 @@ WORKDIR /opt
 
 ENV NGINX_VERSION 1.11.10
 ENV PAGESPEED_VERSION 1.11.33.4
+ENV NGX_BROTLI_COMMIT_HASH bfd2885
 
 RUN CONFIG="\
     --with-http_ssl_module \
@@ -21,7 +22,7 @@ RUN CONFIG="\
   && apt-get clean \
   && git clone --recursive https://github.com/google/ngx_brotli.git \
   && cd ngx_brotli \
-  && git checkout -b bfd2885 \
+  && git checkout -b $NGX_BROTLI_COMMIT_HASH \
   && ( curl -f -L -sS https://ngxpagespeed.com/install | bash -s -- -v $PAGESPEED_VERSION -n $NGINX_VERSION -y -a '$CONFIG' ) \
   && rm -rf /opt/ngx_brotli \
   && apt-get remove -y build-essential git curl wget unzip \
