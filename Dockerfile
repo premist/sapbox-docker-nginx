@@ -26,6 +26,7 @@ RUN addgroup --system nginx \
 
 ADD nginx.conf /usr/local/nginx/conf/nginx.conf
 ADD nginx.vh.default.conf /usr/local/nginx/conf/conf.d/default.conf
+ADD pagespeed_boilerplate.conf /usr/local/nginx/conf/pagespeed_boilerplate.conf
 
 EXPOSE 80 443
 CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
