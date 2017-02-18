@@ -24,6 +24,8 @@ RUN CONFIG="\
   && git checkout -b bfd2885 \
   && ( curl -f -L -sS https://ngxpagespeed.com/install | bash -s -- -v $PAGESPEED_VERSION -n $NGINX_VERSION -y -a '$CONFIG' ) \
   && rm -rf /opt/ngx_brotli \
+  && apt-get remove -y build-essential git curl wget unzip \
+  && apt-get autoremove -y \
   && ln -sf /dev/stdout /usr/local/nginx/logs/access.log \
   && ln -sf /dev/stderr /usr/local/nginx/logs/error.log
 
