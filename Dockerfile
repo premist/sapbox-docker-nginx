@@ -8,6 +8,7 @@ ENV NGX_BROTLI_COMMIT_HASH bfd2885
 
 RUN addgroup --system nginx \
   && adduser --system --no-create-home --disabled-login --disabled-password --ingroup nginx nginx \
+  && sed -i 's/deb\.debian\.org/cdn-fastly\.deb\.debian\.org/g' /etc/apt/sources.list \
   && echo "deb http://cdn-fastly.deb.debian.org/debian/ jessie-backports main contrib non-free" >> /etc/apt/sources.list \
   && apt-get update \
   && apt-get install -y --no-install-recommends --no-install-suggests \
