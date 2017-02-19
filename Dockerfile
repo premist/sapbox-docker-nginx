@@ -8,9 +8,12 @@ ENV NGX_BROTLI_COMMIT_HASH bfd2885
 
 RUN addgroup --system nginx \
   && adduser --system --no-create-home --disabled-login --disabled-password --ingroup nginx nginx \
+  && echo "deb http://cdn-fastly.deb.debian.org/debian/ jessie-backports main contrib non-free" >> /etc/apt/sources.list \
   && apt-get update \
   && apt-get install -y --no-install-recommends --no-install-suggests \
     sudo wget git curl build-essential zlib1g-dev libpcre3 libpcre3-dev libssl-dev unzip ca-certificates \
+  && apt-get install -y --no-install-recommends --no-install-suggests -t jessie-backports \
+    openssl \
   && apt-get clean \
   && git clone --recursive https://github.com/google/ngx_brotli.git \
   && cd ngx_brotli \
