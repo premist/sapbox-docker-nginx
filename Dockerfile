@@ -23,7 +23,9 @@ RUN addgroup --system nginx \
     curl -f -L -sS https://ngxpagespeed.com/install | bash -s -- -v $PAGESPEED_VERSION -n $NGINX_VERSION -y -a '--with-http_ssl_module --with-http_v2_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_mp4_module --with-ipv6 --with-threads --add-module=/opt/ngx_brotli' \
   ) \
   && rm -rf /opt/ngx_brotli \
-  && apt-get remove -y build-essential git curl wget unzip \
+  && rm -rf $HOME/nginx-$NGINX_VERSION \
+  && rm -rf $HOME/ngx_pagespeed-${PAGESPEED_VERSION}-beta \
+  && apt-get remove -y build-essential git curl wget unzip zlib1g-dev libpcre3-dev libssl-dev \
   && apt-get autoremove -y \
   && ln -sf /dev/stdout /usr/local/nginx/logs/access.log \
   && ln -sf /dev/stderr /usr/local/nginx/logs/error.log
