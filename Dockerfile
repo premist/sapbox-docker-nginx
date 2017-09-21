@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 
 WORKDIR /opt
 
@@ -20,7 +20,7 @@ RUN addgroup --system nginx \
   && cd ngx_brotli \
   && git checkout -b $NGX_BROTLI_COMMIT_HASH \
   && ( \
-    curl -f -L -sS https://ngxpagespeed.com/install | bash -s -- -v $PAGESPEED_VERSION -n $NGINX_VERSION -y -a '--with-http_ssl_module --with-http_v2_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_mp4_module --with-ipv6 --with-threads --add-module=/opt/ngx_brotli' \
+    curl -f -L -sS https://ngxpagespeed.com/install | bash -s -- -v $PAGESPEED_VERSION -n $NGINX_VERSION -y -a '--with-http_ssl_module --with-http_v2_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_mp4_module --with-ipv6 --with-http_stub_status_module --with-threads --add-module=/opt/ngx_brotli' \
   ) \
   && rm -rf /opt/ngx_brotli \
   && rm -rf $HOME/nginx-$NGINX_VERSION \
